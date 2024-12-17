@@ -805,6 +805,8 @@ class PageBarState extends State<PageBar> {
             child: StoryProgressIndicator(
 
               isPlaying(it) ? widget.animation!.value : (it.shown ? 1 : 0),
+              direction: widget.directionality,
+
               indicatorHeight:
                   widget.indicatorHeight == IndicatorHeight.large ? 5 : widget.indicatorHeight == IndicatorHeight.medium ? 3 : 2,
               indicatorColor: widget.indicatorColor,
