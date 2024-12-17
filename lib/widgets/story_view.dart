@@ -795,13 +795,12 @@ class PageBarState extends State<PageBar> {
   Widget build(BuildContext context) {
     return Row(
       textDirection: widget.directionality,
-       mainAxisAlignment: MainAxisAlignment.end,
+
       children: widget.pages.map((it) {
         return Expanded(
           child: Container(
 
-            padding:widget.directionality == TextDirection.rtl ? EdgeInsets.only(
-                left: widget.pages.last == it ? 0 : this.spacing):EdgeInsets.only(
+            padding:EdgeInsets.only(
                 right: widget.pages.last == it ? 0 : this.spacing),
             child: StoryProgressIndicator(
 
@@ -826,27 +825,33 @@ class StoryProgressIndicator extends StatelessWidget {
   final double indicatorHeight;
   final Color? indicatorColor;
   final Color? indicatorForegroundColor;
+  final TextDirection? direction;
 
   StoryProgressIndicator(
     this.value, {
     this.indicatorHeight = 5,
     this.indicatorColor,
     this.indicatorForegroundColor,
+        this.direction,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size.fromHeight(
-        this.indicatorHeight,
-      ),
-      foregroundPainter: IndicatorOval(
-        this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
-        this.value,
-      ),
-      painter: IndicatorOval(
-        this.indicatorColor?? Colors.white.withOpacity(0.4),
-        1.0,
+    return Directionality(
+      textDirection: direction?? TextDirection.ltr,
+      child: CustomPaint(
+
+        size: Size.fromHeight(
+          this.indicatorHeight,
+        ),
+        foregroundPainter: IndicatorOval(
+          this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
+          this.value,
+        ),
+        painter: IndicatorOval(
+          this.indicatorColor?? Colors.white.withOpacity(0.4),
+          1.0,
+        ),
       ),
     );
   }
