@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
+import 'package:story_view/widgets/extensions.dart';
 
 import '../controller/story_controller.dart';
 import '../utils.dart';
@@ -805,7 +806,7 @@ class PageBarState extends State<PageBar> {
             child: StoryProgressIndicator(
 
               isPlaying(it) ? widget.animation!.value : (it.shown ? 1 : 0),
-              direction: widget.directionality,
+
 
               indicatorHeight:
                   widget.indicatorHeight == IndicatorHeight.large ? 5 : widget.indicatorHeight == IndicatorHeight.medium ? 3 : 2,
@@ -827,14 +828,14 @@ class StoryProgressIndicator extends StatelessWidget {
   final double indicatorHeight;
   final Color? indicatorColor;
   final Color? indicatorForegroundColor;
-  final TextDirection? direction;
+
 
   StoryProgressIndicator(
     this.value, {
     this.indicatorHeight = 5,
     this.indicatorColor,
     this.indicatorForegroundColor,
-        this.direction,
+
   });
 
   @override
@@ -849,13 +850,13 @@ class StoryProgressIndicator extends StatelessWidget {
         foregroundPainter: IndicatorOval(
           this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
           this.value,
-          direction: TextDirection.rtl,
+           context
         ),
         painter: IndicatorOval(
 
           this.indicatorColor?? Colors.white.withOpacity(0.4),
           1.0,
-          direction: TextDirection.rtl,
+            context
         ),
       ),
     );
@@ -865,8 +866,8 @@ class StoryProgressIndicator extends StatelessWidget {
 class IndicatorOval extends CustomPainter {
   final Color color;
   final double widthFactor;
- final TextDirection? direction;
-  IndicatorOval(this.color, this.widthFactor,{this.direction});
+  final BuildContext context;
+  IndicatorOval(this.color, this.widthFactor,this.context);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -874,7 +875,7 @@ class IndicatorOval extends CustomPainter {
 
     // Draw the rectangle from right to left
     double startX = size.width - size.width * this.widthFactor;
-  if(direction == TextDirection.rtl){
+  if(context.isArabic){
     debugPrint('(direction == TextDirection.rtl');
     canvas.drawRRect(
       RRect.fromRectAndRadius(
