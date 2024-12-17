@@ -647,19 +647,16 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                 // we use SafeArea here for notched and bezeles phones
                 child: Container(
                   padding: widget.indicatorOuterPadding,
-                  child: Directionality(
-                    textDirection: widget.textDirection ?? TextDirection.ltr,
-                    child: PageBar(
-                      widget.storyItems
-                          .map((it) => PageData(it!.duration, it.shown))
-                          .toList(),
-                      this._currentAnimation,
-                      key: UniqueKey(),
-                      textDirection: widget.textDirection,
-                      indicatorHeight: widget.indicatorHeight,
-                      indicatorColor: widget.indicatorColor,
-                      indicatorForegroundColor: widget.indicatorForegroundColor,
-                    ),
+                  child: PageBar(
+                    widget.storyItems
+                        .map((it) => PageData(it!.duration, it.shown))
+                        .toList(),
+                    this._currentAnimation,
+                    key: UniqueKey(),
+                    textDirection: widget.textDirection,
+                    indicatorHeight: widget.indicatorHeight,
+                    indicatorColor: widget.indicatorColor,
+                    indicatorForegroundColor: widget.indicatorForegroundColor,
                   ),
                 ),
               ),
@@ -797,6 +794,7 @@ class PageBarState extends State<PageBar> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      textDirection: widget.textDirection,
       children: widget.pages.map((it) {
         return Expanded(
           child: Container(
