@@ -841,18 +841,21 @@ class StoryProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: direction?? TextDirection.ltr,
-      child: CustomPaint(
+      child: Align(
+        alignment:direction == TextDirection.rtl? Alignment.centerRight:Alignment.centerLeft,
+        child: CustomPaint(
 
-        size: Size.fromHeight(
-          this.indicatorHeight,
-        ),
-        foregroundPainter: IndicatorOval(
-          this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
-          this.value,
-        ),
-        painter: IndicatorOval(
-          this.indicatorColor?? Colors.white.withOpacity(0.4),
-          1.0,
+          size: Size.fromHeight(
+            this.indicatorHeight,
+          ),
+          foregroundPainter: IndicatorOval(
+            this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
+            this.value,
+          ),
+          painter: IndicatorOval(
+            this.indicatorColor?? Colors.white.withOpacity(0.4),
+            1.0,
+          ),
         ),
       ),
     );
