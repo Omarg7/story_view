@@ -841,21 +841,18 @@ class StoryProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: direction?? TextDirection.ltr,
-      child: Align(
-        alignment:direction == TextDirection.rtl? Alignment.topRight:Alignment.topLeft,
-        child: CustomPaint(
+      child: CustomPaint(
 
-          size: Size.fromHeight(
-            this.indicatorHeight,
-          ),
-          foregroundPainter: IndicatorOval(
-            this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
-            this.value,
-          ),
-          painter: IndicatorOval(
-            this.indicatorColor?? Colors.white.withOpacity(0.4),
-            1.0,
-          ),
+        size: Size.fromHeight(
+          this.indicatorHeight,
+        ),
+        foregroundPainter: IndicatorOval(
+          this.indicatorForegroundColor?? Colors.white.withOpacity(0.8),
+          this.value,
+        ),
+        painter: IndicatorOval(
+          this.indicatorColor?? Colors.white.withOpacity(0.4),
+          1.0,
         ),
       ),
     );
@@ -865,12 +862,26 @@ class StoryProgressIndicator extends StatelessWidget {
 class IndicatorOval extends CustomPainter {
   final Color color;
   final double widthFactor;
-
-  IndicatorOval(this.color, this.widthFactor);
+ final TextDirection? direction;
+  IndicatorOval(this.color, this.widthFactor,{this.direction});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = this.color;
+
+    // Draw the rectangle from right to left
+    double startX = size.width - size.width * this.widthFactor;
+  if(direction == TextDirection.rtl){
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(startX, 0, size.width * this.widthFactor, size.height),
+        Radius.circular(3),
+      ),
+      paint,
+    );
+    return;
+  }
+
     canvas.drawRRect(
         RRect.fromRectAndRadius(
             Rect.fromLTWH(0, 0, size.width * this.widthFactor, size.height),
