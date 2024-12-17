@@ -795,6 +795,7 @@ class PageBarState extends State<PageBar> {
   Widget build(BuildContext context) {
     return Row(
       textDirection: widget.directionality,
+       mainAxisAlignment: MainAxisAlignment.end,
       children: widget.pages.map((it) {
         return Expanded(
           child: Container(
