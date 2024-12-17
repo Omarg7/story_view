@@ -872,6 +872,7 @@ class IndicatorOval extends CustomPainter {
     // Draw the rectangle from right to left
     double startX = size.width - size.width * this.widthFactor;
   if(direction == TextDirection.rtl){
+    debugPrint('(direction == TextDirection.rtl');
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(startX, 0, size.width * this.widthFactor, size.height),
