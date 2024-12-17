@@ -842,7 +842,7 @@ class StoryProgressIndicator extends StatelessWidget {
     return Directionality(
       textDirection: direction?? TextDirection.ltr,
       child: Align(
-        alignment:direction == TextDirection.rtl? Alignment.centerRight:Alignment.centerLeft,
+        alignment:direction == TextDirection.rtl? Alignment.topRight:Alignment.topLeft,
         child: CustomPaint(
 
           size: Size.fromHeight(
