@@ -412,8 +412,7 @@ class StoryView extends StatefulWidget {
 
   /// Determine the height of the indicator
   final IndicatorHeight indicatorHeight;
-  /// Determine the direction of the indicator
-  final TextDirection? directionality;
+
   /// Use this if you want to give outer padding to the indicator
   final EdgeInsetsGeometry indicatorOuterPadding;
 
@@ -430,7 +429,7 @@ class StoryView extends StatefulWidget {
     this.indicatorForegroundColor,
     this.indicatorHeight = IndicatorHeight.large,
     this.indicatorOuterPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8,),
-    this.directionality,
+
   });
 
   @override
@@ -654,7 +653,7 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                         .toList(),
                     this._currentAnimation,
                     key: UniqueKey(),
-                    directionality: widget.directionality,
+
                     indicatorHeight: widget.indicatorHeight,
                     indicatorColor: widget.indicatorColor,
                     indicatorForegroundColor: widget.indicatorForegroundColor,
@@ -747,7 +746,7 @@ class PageBar extends StatefulWidget {
   final Animation<double>? animation;
   final IndicatorHeight indicatorHeight;
   final Color? indicatorColor;
-  final TextDirection? directionality;
+
   final Color? indicatorForegroundColor;
 
   PageBar(
@@ -756,7 +755,7 @@ class PageBar extends StatefulWidget {
     this.indicatorHeight = IndicatorHeight.large,
     this.indicatorColor,
     this.indicatorForegroundColor,
-        this.directionality,
+
     Key? key,
   }) : super(key: key);
 
@@ -795,7 +794,7 @@ class PageBarState extends State<PageBar> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      textDirection: widget.directionality,
+
 
       children: widget.pages.map((it) {
         return Expanded(
