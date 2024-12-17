@@ -800,7 +800,8 @@ class PageBarState extends State<PageBar> {
         return Expanded(
           child: Container(
 
-            padding:EdgeInsets.only(
+            padding:context.isArabic? EdgeInsets.only(
+                left: widget.pages.last == it ? 0 : this.spacing):EdgeInsets.only(
                 right: widget.pages.last == it ? 0 : this.spacing),
             child: StoryProgressIndicator(
 
