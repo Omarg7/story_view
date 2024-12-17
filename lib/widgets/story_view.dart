@@ -411,7 +411,8 @@ class StoryView extends StatefulWidget {
 
   /// Determine the height of the indicator
   final IndicatorHeight indicatorHeight;
-
+  /// Determine the direction of the indicator
+  final TextDirection? textDirection;
   /// Use this if you want to give outer padding to the indicator
   final EdgeInsetsGeometry indicatorOuterPadding;
 
@@ -428,6 +429,7 @@ class StoryView extends StatefulWidget {
     this.indicatorForegroundColor,
     this.indicatorHeight = IndicatorHeight.large,
     this.indicatorOuterPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8,),
+    this.textDirection,
   });
 
   @override
@@ -645,15 +647,19 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                 // we use SafeArea here for notched and bezeles phones
                 child: Container(
                   padding: widget.indicatorOuterPadding,
-                  child: PageBar(
-                    widget.storyItems
-                        .map((it) => PageData(it!.duration, it.shown))
-                        .toList(),
-                    this._currentAnimation,
-                    key: UniqueKey(),
-                    indicatorHeight: widget.indicatorHeight,
-                    indicatorColor: widget.indicatorColor,
-                    indicatorForegroundColor: widget.indicatorForegroundColor,
+                  child: Directionality(
+                    textDirection: widget.textDirection ?? TextDirection.ltr,
+                    child: PageBar(
+                      widget.storyItems
+                          .map((it) => PageData(it!.duration, it.shown))
+                          .toList(),
+                      this._currentAnimation,
+                      key: UniqueKey(),
+                      textDirection: widget.textDirection,
+                      indicatorHeight: widget.indicatorHeight,
+                      indicatorColor: widget.indicatorColor,
+                      indicatorForegroundColor: widget.indicatorForegroundColor,
+                    ),
                   ),
                 ),
               ),
@@ -743,6 +749,7 @@ class PageBar extends StatefulWidget {
   final Animation<double>? animation;
   final IndicatorHeight indicatorHeight;
   final Color? indicatorColor;
+  final TextDirection? textDirection;
   final Color? indicatorForegroundColor;
 
   PageBar(
@@ -751,6 +758,7 @@ class PageBar extends StatefulWidget {
     this.indicatorHeight = IndicatorHeight.large,
     this.indicatorColor,
     this.indicatorForegroundColor,
+        this.textDirection,
     Key? key,
   }) : super(key: key);
 
@@ -792,9 +800,12 @@ class PageBarState extends State<PageBar> {
       children: widget.pages.map((it) {
         return Expanded(
           child: Container(
-            padding: EdgeInsets.only(
+
+            padding:widget.textDirection == TextDirection.rtl ? EdgeInsets.only(
+                left: widget.pages.last == it ? 0 : this.spacing):EdgeInsets.only(
                 right: widget.pages.last == it ? 0 : this.spacing),
             child: StoryProgressIndicator(
+
               isPlaying(it) ? widget.animation!.value : (it.shown ? 1 : 0),
               indicatorHeight:
                   widget.indicatorHeight == IndicatorHeight.large ? 5 : widget.indicatorHeight == IndicatorHeight.medium ? 3 : 2,
