@@ -840,7 +840,7 @@ class StoryProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: direction?? TextDirection.ltr,
+      textDirection:  TextDirection.rtl,
       child: CustomPaint(
 
         size: Size.fromHeight(
